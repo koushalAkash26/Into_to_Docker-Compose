@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      target: dev
+  
+    ports:
+      - 5000:5000
+    depends_on:
+      db:
+       condition: service_healthy
+    command: >
+      bash -c "npm run db:migrate &&
+               npm run db:seed &&
+               npm run dev"
+
+
+  db:
+    extends:
+      file: docker-compose.base.yml
+      service: db  # Number of retries before marking the container as unhealthy

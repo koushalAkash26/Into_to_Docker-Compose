@@ -1,25 +1,14 @@
 services:
-  app:
-    build: .
-    ports:
-      - 5000:5000
-    depends_on:
-      db:
-       condition: service_healthy
-    command: >
-      bash -c "npm run db:migrate &&
-               npm run db:seed &&
-               npm run dev"
-
-
   db:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s  # Check every 10 seconds
       timeout: 5s    # Timeout for the command
-      retries: 5      # Number of retries before marking the container as unhealthy
+      retries: 5
