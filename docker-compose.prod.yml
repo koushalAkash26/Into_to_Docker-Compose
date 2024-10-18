@@ -21,3 +21,5 @@ services:
     extends:
       file: docker-compose.base.yml
       service: db
+      volumes:
+      - ./db-data:/var/lib/postgresql/data
