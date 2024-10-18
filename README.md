@@ -1,6 +1,3 @@
-Here's a `README.md` tailored to your project:
-
----
 
 # Intro to Docker Compose
 
